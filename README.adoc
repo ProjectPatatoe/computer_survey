@@ -1,0 +1,20 @@
+Computer Survey
+===============
+
+Ask the computer the details about itself. Intended as a quick way to inventory
+active computers.
+
+Currently, using Powershell to process and WMI(DCOM) to interrogate the remote
+system. Saving as a tab-seperated file.
+
+Note: it is tab seperated because domain descriptions can contain commas as well
+as some lists may return multiple values.
+
+TODO
+^^^^
+* This documentation
+* Multithreaded
+* Smarter error handling
+* non-dcom
+* Non-windows targets
+* better DNS decision making

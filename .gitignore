@@ -1,0 +1,7 @@
+#ignore output/converted files
+*.txt
+*.tsv
+*.csv
+*.xls
+*.xlsx
+*.ods
