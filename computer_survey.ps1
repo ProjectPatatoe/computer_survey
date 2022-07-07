@@ -15,6 +15,8 @@
 	A string path to export just a list of computers to test against (txt)
 .PARAMETER ExportTab
 	A string path to export the tab-seperated results of the full test/survey (txt/tsv)
+.PARAMETER ForceReturn
+	When exporting as list/tab, it doesn't return the result list. This will force it.
 .PARAMETER Debug
 	Extra debugging output
 .PARAMETER DnsChecking
@@ -25,6 +27,7 @@ Param(
 	[string[]]$OrgUnit,
     [string]$ExportList,
 	[string]$ExportTab,
+	[switch]$ForceReturn,
 	[switch]$Debug,
 	[switch]$DnsChecking
 )
@@ -373,7 +376,7 @@ foreach($computer in $computer_list)
 	}
 	$computer_results += ($cNew)
 }
-$computer_results | Select-Object Name,SerialNumber,OS_LastBootUpTime,User | Format-Table
+Write-Host $computer_results | Select-Object Name,SerialNumber,OS_LastBootUpTime,User | Format-Table
 if ($ExportList)
 {
 	$computer_list | Out-File -FilePath $ExportList
@@ -382,5 +385,9 @@ if ($ExportTab)
 {
 	"Exporting to txt...Tab delimited. open in excel"
 	$computer_results | Export-CSV -Delimiter '	' -Path $ExportTab
+}
+if ($ForceReturn -or (!$ExportList -and !$ExportTag))
+{
+	return $computer_results
 }
 "done"
