@@ -1,6 +1,7 @@
 #ignore output/converted files
 *.txt
 *.tsv
+*.tab
 *.csv
 *.xls
 *.xlsx
