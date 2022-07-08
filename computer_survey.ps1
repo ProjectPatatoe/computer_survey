@@ -78,6 +78,7 @@ class Computer_class {
 	[string]  $DNS_domain
 	[string]  $DNS_local
 	[bool]    $DNS_match
+	[string]  $DNSHostName
 	[string]  $SMBIOSBIOSVersion
 	[string]  $SerialNumber
 	[string]  $SMBIOSAssetTag
@@ -229,6 +230,7 @@ foreach($computer in $computer_list)
 		##### Computersystem
 		$computersystem = Get-CimInstance win32_computersystem -cimsession $cimSession | Select-Object DNSHostName,Model
 		Write-Debug $computersystem | format-list
+		$cNew.DNSHostName = $computersystem.DNSHostName
 		$cNew.Model = $computersystem.Model
 		##### Physical memory array
 		$physicalMemoryArray = Get-CimInstance win32_physicalmemoryarray -cimsession $cimSession |
