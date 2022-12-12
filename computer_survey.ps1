@@ -56,7 +56,7 @@ if ($OrgUnit)
 	Write-Debug ("Adding OU:{0}" -f $OU)
 	foreach ($item in $OrgUnit) {
 		"Adding OU:{0}" -f $item
-		$computer_list += Get-ADComputer -Filter * -SearchBase $item  -Properties Name,DnsHostName,IPv4Address,Description
+		$computer_list += Get-ADComputer -Filter * -SearchBase $item  -Properties Name,DnsHostName,IPv4Address,Description,lastLogon
 	}
 }
 if ($ComputerName)
@@ -75,6 +75,7 @@ $cimSessionOption = new-cimsessionoption -protocol dcom #because less things nee
 class Computer_class {
 	[string]  $Name
 	[string]  $Description
+	[DateTime]$Domain_LastLogon
 	[string]  $DNS_domain
 	[string]  $DNS_local
 	[bool]    $DNS_match
@@ -141,6 +142,7 @@ foreach($computer in $computer_list)
 	Write-Host $computer.Name
 	$cNew.Name=$computer.Name
 	$cNew.Description=$computer.Description
+	$cNew.Domain_LastLogon = [DateTime]::FromFileTime($computer.lastLogon)
 	$cUsedAddress = ''
 	
 	##### DNS matching
