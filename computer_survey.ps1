@@ -210,7 +210,8 @@ foreach($computer in $computer_list)
 					{ $cUsedAddress = $cNew.DNS_local }
 				}
 			}
-		}
+		}#else mismatch domain dns and local
+        Write-Debug $cimSession
 	} #if (DnsChecking)
 	else {
 		$cimSession = new-cimsession -sessionoption $cimSessionOption -computername $computer.Name
