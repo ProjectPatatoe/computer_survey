@@ -18,3 +18,9 @@ TODO
 * non-dcom
 * Non-windows targets
 * better DNS decision making
+* Note a status between 
+  * OK
+  * RPC server is unavailable
+  * Access is denied
+* get AD information
+  
