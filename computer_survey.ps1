@@ -39,7 +39,7 @@ if($PSBoundParameters.Values.Count -eq 0) {
 Import-Module QuserObject #nice clean wrapper for using quser / query user
 
 #FIXME reorganize processing and declarations
-
+$start_timestamp = Get-Date
 ##### Get computer list #####
 [pscustomobject[]]$computer_list = @()
 if ($Debug) {
@@ -381,7 +381,8 @@ foreach($computer in $computer_list)
 	}
 	$computer_results += ($cNew)
 }
-Write-Host $computer_results | Select-Object Name,SerialNumber,OS_LastBootUpTime,User | Format-Table
+$End_timestamp = Get-Date
+
 if ($ExportList)
 {
 	$computer_list | Out-File -FilePath $ExportList
@@ -395,4 +396,12 @@ if ($ForceReturn -or (!$ExportList -and !$ExportTag))
 {
 	return $computer_results
 }
-"done"
+
+$span_timestamp = New-TimeSpan -Start $start_timestamp -End $end_timestamp
+"Start:{0}" -f $start_timestamp
+"  End:{0}" -f $end_timestamp
+"      {0}" -f $span_timestamp
+
+Write-Host $computer_results | Select-Object Name,SerialNumber,SMBIOSAssetTag,OS_LastBootUpTime,User | Format-Table
+
+Write-host "done"
